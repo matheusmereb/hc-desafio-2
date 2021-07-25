@@ -1,16 +1,16 @@
 import React from 'react'
 import './App.css'
 import Navbar1 from './Navbar'
-import FormExample from './Form'
+import Routes from './Routes'
 import Footer from './Footer'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
   return (
-    <div className="App">
+    <div className="App section">
       <Navbar1 />
-      <FormExample className="section" />
+      <Routes />
       <Footer />
     </div>
   )

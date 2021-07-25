@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap'
 
-export default function FormExample() {
+export default function Home() {
     const [validated, setValidated] = useState(false);
-    const [usuario, setUsuario] = useState()
+    const [clients, setClient] = useState([])
+    const inputNome = useRef(null)
+    const inputSobrenome = useRef(null)
+    const inputIdClient = useRef(null)
+    const inputCidade = useRef(null)
+    const inputEstado = useRef(null)
+    const inputEmail = useRef(null)
+
+    const [products, setProduct] = useState([])
+    const inputProduct = useRef(null)
+    const inputValue = useRef(null)
+    const inputIdProduct = useRef(null)
+    const inputFornecedor = useRef(null)
   
     const handleUserSubmit = (event) => {
       const form = event.currentTarget;
@@ -15,16 +27,36 @@ export default function FormExample() {
       console.log('Usuário cadastrado!')
 
       setValidated(true);
+
+      const newClient = {
+          id: inputIdClient,
+          nome: inputNome,
+          sobrenome: inputSobrenome,
+          cidade: inputCidade,
+          estado: inputEstado,
+          email: inputEmail
+      }
+      setClient([...clients, newClient]);
+      localStorage.setItem(newClient.id, newClient)
     };
 
     const handleProductSubmit = (event) => {
         event.preventDefault()
         event.stopPropagation()
-        console.log('Produto cadastrado!')      
+        console.log('Produto cadastrado!')   
+        
+        const newProduct = {
+            id: inputIdProduct,
+            produto: inputProduct,
+            valor: inputValue,
+            fornecedor: inputFornecedor,
+        }
+        setProduct([...products, newProduct]);
+        localStorage.setItem(newProduct.id, newProduct)
     };
   
     return (
-        <>
+        <div className="section">
         <Form noValidate validated={validated} onSubmit={handleUserSubmit} className="log-div">
             <h2>Cadastro de Clientes</h2>
             <Row className="mb-3">
@@ -34,6 +66,7 @@ export default function FormExample() {
                 required
                 type="text"
                 placeholder="Ex.: 'João'"
+                ref={inputNome}
                 />
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom02">
@@ -42,6 +75,7 @@ export default function FormExample() {
                 required
                 type="text"
                 placeholder="Ex.: 'Silva'"
+                ref={inputSobrenome}
                 />
             </Form.Group>
             <Form.Group as={Col} md="3" controlId="validationCustomUsername">
@@ -53,6 +87,7 @@ export default function FormExample() {
                     placeholder="Ex.: '1'"
                     aria-describedby="inputGroupPrepend"
                     required
+                    ref={inputIdClient}
                 />
                 <Form.Control.Feedback type="invalid">
                     Por favor escolha um ID válido.
@@ -63,21 +98,21 @@ export default function FormExample() {
             <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
                 <Form.Label>Cidade</Form.Label>
-                <Form.Control type="text" placeholder="Ex.: 'Limeira'" required />
+                <Form.Control type="text" placeholder="Ex.: 'Limeira'" required ref={inputCidade}/>
                 <Form.Control.Feedback type="invalid">
                 Por favor informe uma Cidade válida.
                 </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="3" controlId="validationCustom04">
                 <Form.Label>Estado</Form.Label>
-                <Form.Control type="text" placeholder="Ex.: 'São Paulo'" required />
+                <Form.Control type="text" placeholder="Ex.: 'São Paulo'" required ref={inputEstado}/>
                 <Form.Control.Feedback type="invalid">
                     Por favor informe um Estado válido.
                 </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="3" controlId="validationCustom05">
                 <Form.Label>E-mail</Form.Label>
-                <Form.Control type="text" placeholder="Ex.: 'joao@silva.com'" required />
+                <Form.Control type="text" placeholder="Ex.: 'joao@silva.com'" required ref={inputEmail} />
                 <Form.Control.Feedback type="invalid">
                 Por favor, informe um e-mail válido.
                 </Form.Control.Feedback>
@@ -96,7 +131,7 @@ export default function FormExample() {
         <Form noValidate validated={validated} onSubmit={handleProductSubmit} className="log-div">
             <h2>Cadastro de Produtos</h2>
             <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
+            <Form.Group as={Col} md="4" controlId="validationCustom01" ref={inputProduct}>
                 <Form.Label>Nome do Produto</Form.Label>
                 <Form.Control
                 required
@@ -112,7 +147,7 @@ export default function FormExample() {
                     type="text"
                     placeholder="Ex.: R$ 4,99"
                     aria-describedby="inputGroupPrepend"
-                    required
+                    required  ref={inputValue}
                 />
                 <Form.Control.Feedback type="invalid">
                     Por favor insira um valor.
@@ -123,14 +158,14 @@ export default function FormExample() {
             <Row className="mb-3">
             <Form.Group as={Col} md="6" controlId="validationCustom03">
                 <Form.Label>ID do Produto</Form.Label>
-                <Form.Control type="text" placeholder="Ex.: '123'" required />
+                <Form.Control type="text" placeholder="Ex.: '123'" required ref={inputIdProduct}/>
                 <Form.Control.Feedback type="invalid">
                 Por favor informe um ID válido.
                 </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="3" controlId="validationCustom04">
                 <Form.Label>Fornecedor</Form.Label>
-                <Form.Control type="text" placeholder="Ex.: 'RibaCercas'" required />
+                <Form.Control type="text" placeholder="Ex.: 'RibaCercas'" required ref={inputFornecedor} />
                 <Form.Control.Feedback type="invalid">
                     Por favor informe um fornecedor.
                 </Form.Control.Feedback>
@@ -138,6 +173,6 @@ export default function FormExample() {
             </Row>
             <Button type="submit">Cadastrar Produto</Button>
         </Form>
-        </>
+        </div>
     );
   }
