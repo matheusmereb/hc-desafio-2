@@ -29,15 +29,15 @@ export default function Home() {
       setValidated(true);
 
       const newClient = {
-          id: inputIdClient,
-          nome: inputNome,
-          sobrenome: inputSobrenome,
-          cidade: inputCidade,
-          estado: inputEstado,
-          email: inputEmail
+          id: inputIdClient.current.value,
+          nome: inputNome.current.value,
+          sobrenome: inputSobrenome.current.value,
+          cidade: inputCidade.current.value,
+          estado: inputEstado.current.value,
+          email: inputEmail.current.value
       }
-      setClient([...clients, newClient]);
-      localStorage.setItem(newClient.id, newClient)
+    //   setClient([...clients, newClient]);
+      localStorage.setItem(('cliente '+newClient.id.toString()), JSON.stringify(newClient))
     };
 
     const handleProductSubmit = (event) => {
@@ -46,13 +46,14 @@ export default function Home() {
         console.log('Produto cadastrado!')   
         
         const newProduct = {
-            id: inputIdProduct,
-            produto: inputProduct,
-            valor: inputValue,
-            fornecedor: inputFornecedor,
+            id: inputIdProduct.current.value,
+            produto: inputProduct.current.value,
+            valor: inputValue.current.value,
+            fornecedor: inputFornecedor.current.value,
         }
-        setProduct([...products, newProduct]);
-        localStorage.setItem(newProduct.id, newProduct)
+        
+        // setProduct([...products, newProduct]);
+        localStorage.setItem(('produto '+newProduct.id.toString()), JSON.stringify(newProduct))
     };
   
     return (
@@ -131,12 +132,13 @@ export default function Home() {
         <Form noValidate validated={validated} onSubmit={handleProductSubmit} className="log-div">
             <h2>Cadastro de Produtos</h2>
             <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom01" ref={inputProduct}>
+            <Form.Group as={Col} md="4" controlId="validationCustom01" >
                 <Form.Label>Nome do Produto</Form.Label>
                 <Form.Control
                 required
                 type="text"
                 placeholder="Ex.: Bloco de Post-it Verde"
+                ref={inputProduct}
                 />
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
