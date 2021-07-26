@@ -1,4 +1,4 @@
-import React from "react";
+/* import React from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Home from './Home'
 import Clients from './Clients'
@@ -15,3 +15,4 @@ export default function Routes() {
     </BrowserRouter>
   );
 }
+ */
